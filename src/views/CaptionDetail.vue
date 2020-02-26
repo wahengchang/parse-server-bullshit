@@ -1,6 +1,5 @@
 <template>
   <div class="wrapper inner">
-    <NavBar />
     <div class="inputContainer" v-if="templateData">
       <h3>{{templateData.title}}</h3>
       <div class="contentContainer">
@@ -20,11 +19,10 @@
 <script>
 import Parse from "parse";
 import ReactiveSpeechTextInput from "@/components/ReactiveSpeechTextInput";
-import NavBar from "@/components/NavBar";
 
 export default {
   name: "captionDetail",
-  components: { ReactiveSpeechTextInput, NavBar },
+  components: { ReactiveSpeechTextInput },
   data() {
     return {
       templateData: null,

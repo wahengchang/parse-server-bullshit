@@ -1,30 +1,31 @@
 <template>
-  <div id="app">
+  <div id="app" class="fixed-left">
     <loading :active="isLoading" 
     :can-cancel="true" 
     :is-full-page="true"></loading>
 
 		<!-- Header -->
-			<header id="header">
-        <router-link class="logo" to="/">Home</router-link>
-				<nav >
-					<a v-if='user'> Hi! {{user.username}}</a>
-          <router-link to="/login" v-else> Login </router-link>
-				</nav>
-			</header>
-    <router-view/>
+    <div id="wrapper">
+      <component :is="layout">
+        <router-view/>
+      </component>
+    </div>
   </div>
 </template>
 <script>
 import Loading from 'vue-loading-overlay';
+import LeftNav from '@/components/LeftNav';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import Parse from 'parse'
 
 export default {
-  components:{Loading},
+  components:{Loading, LeftNav},
   computed: {
     isLoading: function() {
       return this.$store.system.isLoading
+    },
+    layout() {
+      return (this.$route.meta.layout || 'default') + "-layout";
     },
     user: function () {
       return  (Parse.User.current() && Parse.User.current().toJSON() )|| null

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Secret from '../views/Secret.vue'
+import Welcome from '../views/Welcome.vue'
 import Logout from '../views/Logout.vue'
 import IgFetchMedia from '../views/IgFetchMedia.vue'
 import IgPreEdit from '../views/IgPreEdit.vue'
@@ -17,19 +18,21 @@ const requiredLogin = 'REQUIRED_LOGIN'
 const requiredLogout = 'REQUIRED_LOGOUT'
 const requiredPublic = 'REQUIRED_PUBLIC'
 
+const layoutNoSlider = "no-sidebar"
+
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    meta: {permission: requiredPublic},
+    meta: {permission: requiredPublic, layout: layoutNoSlider},
     component: Home
   },
   {
     path: '/login',
     name: 'login',
-    meta: {permission: requiredLogout},
+    meta: {permission: requiredLogout,  layout: layoutNoSlider},
     component: Login
   },
   {
@@ -43,6 +46,12 @@ const routes = [
     name: 'secret',
     meta: {permission: requiredLogin},
     component: Secret
+  },
+  {
+    path: '/welcome',
+    name: 'welcome',
+    meta: {permission: requiredLogin},
+    component: Welcome
   },
   {
     path: '/igfetch',
@@ -64,32 +73,32 @@ const routes = [
   },
   {
     path: '/templateList',
-    name: 'ig',
+    name: 'templateList',
     meta: {permission: requiredLogin},
     component: TemplateList
   },
   {
     path: '/templateList/:id',
-    name: 'ig',
+    name: 'templateListDetail',
     meta: {permission: requiredLogin},
     component: TemplateDetail
   },
   {
     path: '/caption/:id',
-    name: 'ig',
+    name: 'captionDetail',
     meta: {permission: requiredLogin},
     component: CaptionDetail
   },
   {
     path: '/igPreEdit',
-    name: 'ig',
+    name: 'igPreEdit',
     meta: {permission: requiredLogin},
     component: IgPreEdit
   },
   {
     path: '/error',
     name: 'error',
-    meta: {permission: requiredPublic},
+    meta: {permission: requiredPublic, layout: layoutNoSlider},
     component: () => import('../views/Error.vue')
   }
 ]
@@ -115,7 +124,7 @@ router.beforeEach((to, from, next) => {
   // 2- required logout
   if (permission === requiredLogout && user) {
     return next({
-      path: '/error',
+      path: '/welcome',
       query: { msg: 'Required logout, but user: '+user.toJSON().username }
     })
   }

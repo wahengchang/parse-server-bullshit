@@ -1,9 +1,10 @@
 
 <template>
-    <div class='row'>
+    <div class=''>
         <div>
-            <div class='inputContainer'>
-                <highlightable-input 
+            <div class='note-editor note-frame card'>
+                <highlightable-input
+                    class='note-editable card-block'
                     highlight-style="background-color:yellow" 
                     :highlight-enabled="true" 
                     :highlight="_highlight || ['']" 
@@ -11,12 +12,12 @@
                 />
             </div>
         </div>
-        <div cols="4">
+        <div class='button-items'>
             <NotificationMsg ref='msgNoti'/>
-            <button class='reactiveButton' v-if='editable && isChanged' @click='handlerPressEnter(innerValue)'>
+            <button type='button' class='btn btn-outline-secondary waves-effect' v-if='editable && isChanged' @click='handlerPressEnter(innerValue)'>
                 save
             </button>
-            <button class='reactiveButton reset' v-if='editable && isChanged' @click='handlerOnReset'>
+            <button type='button' class='btn btn-outline-secondary waves-effect reset' v-if='editable && isChanged' @click='handlerOnReset'>
                 reset
             </button>
         </div>
@@ -81,7 +82,7 @@ export default {
 </script>
 
 <style scoped>
-textarea {
+/* textarea {
     width: 100%;
     min-height: 100px;
 }
@@ -103,5 +104,5 @@ textarea {
 
 .reset {
     background: #aaeeee;
-}
+} */
 </style>

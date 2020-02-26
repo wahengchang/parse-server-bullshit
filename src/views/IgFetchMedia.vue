@@ -1,35 +1,50 @@
 <template>
-  <div class="">
-    <NavBar />
-    <div class="wrapper inputContainer">
-      <h2>Instagram media URL</h2>
-      <p> Input a valid url link of IG's media, and we snapshot it </p>
-      <input
-        type="text"
-        name="igUrl"
-        placeholder="https://www.instagram.com/p/B78mO-3jgYD/"
-        v-model="inputUrl"
-        @change="fetchIg"
-      />
-      
-      <div class='buttonRow'>
-        <button class='button primary small' @click="fetchIg" :disabled='isLoading'>{{isLoading? 'Loading' : 'Fetch'}}</button>
+  <div class>
+    <div class="row">
+      <h2 class="col-lg-12">Instagram media URL</h2>
+      <p class="col-lg-12">Input a valid url link of IG's media, and we snapshot it</p>
+      <div class="col-lg-12">
+        <div class="input-group">
+          <input
+            type="text"
+            name="igUrl"
+            class="form-control"
+            v-model="inputUrl"
+            @change="onHandleFetchIg"
+            placeholder="https://www.instagram.com/p/B78mO-3jgYD/"
+          />
+          <span class="input-group-append">
+            <button
+              type="button"
+              class="btn btn-effect-ripple btn-primary"
+              @click="onHandleFetchIg"
+              :disabled="isLoading"
+            >
+              <i class="fas fa-search"></i>
+              {{isLoading? 'Loading' : 'Fetch'}}
+            </button>
+          </span>
+        </div>
       </div>
     </div>
-    <div class="displayContainer" v-if="caption || imgUrl">
-      <div class="row">
-        <div class='halfRow30'>
-          <img :src="imgUrl" />
-        </div>
-        <div class='halfRow70'>
-          <p>{{caption}}</p>
+    <div class="row" v-if="caption || imgUrl">
+      <div class="col-12">
+        <div class="card m-t-30">
           <div class="row">
-            <p>
-              <router-link
-                :to="`/igPreEdit?caption=${encodeURIComponent(caption)}`"
-                class="button primary small"
-              >Process This Media</router-link>
-            </p>
+            <div class="col-4">
+              <img class="img-fluid" :src="imgUrl" />
+            </div>
+            <div class="col-8">
+              <p>{{caption}}</p>
+              <div class="row">
+                <p>
+                  <router-link
+                    :to="`/igPreEdit?caption=${encodeURIComponent(caption)}`"
+                    class="btn btn-primary waves-effect waves-light"
+                  >Process This Media</router-link>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -39,13 +54,12 @@
 
 <script>
 import Parse from "parse";
-import NavBar from '@/components/NavBar'
 
 export default {
   name: "secret",
-  components: {NavBar},
+  components: {},
   data() {
-    const {url = ''} = this.$route.query
+    const { url = "" } = this.$route.query;
     return {
       inputUrl: url || null,
       isLoading: false,
@@ -54,18 +68,19 @@ export default {
     };
   },
   mounted() {
-    const {inputUrl} = this
+    const { inputUrl } = this;
 
-    if(inputUrl) {
-      return this.fetchIg()
+    if (inputUrl) {
+      return this.onHandleFetchIg();
     }
   },
   methods: {
-    fetchIg: async function() {
+    onHandleFetchIg: async function() {
       try {
         const { inputUrl } = this;
-        if(!inputUrl) throw new Error('[ERROR] inputUrl is null')
+        if (!inputUrl) throw new Error("[ERROR] inputUrl is null");
 
+        this.$store.system.isLoading = true;
         this.isLoading = true;
         this.caption = null;
         this.imgUrl = null;
@@ -75,9 +90,11 @@ export default {
         this.caption = caption;
         this.imgUrl = imgUrl;
         this.isLoading = false;
+        this.$store.system.isLoading = false;
       } catch (e) {
         alert(e);
         this.isLoading = false;
+        this.$store.system.isLoading = false;
       }
     }
   }
@@ -85,39 +102,4 @@ export default {
 </script>
 
 <style scoped>
-.inputContainer {
-  text-align: center;
-}
-input {
-  width: 100%;
-  max-width: 600px;
-  margin: auto;
-}
-.displayContainer {
-  display: flex;
-  flex-direction: column;
-  padding: 20px 10px;
-}
-.displayContainer .row {
-  margin: 10px 0;
-  display: flex;
-}
-.displayContainer img {
-  width: 100%;
-  height: 100%;
-}
-.displayContainer p {
-  width: 100%;
-  padding: 0 20px;
-  margin: 0;
-}
-.buttonRow {
-  margin-top: 40px;
-}
-.halfRow30 {
-  width: 30%;
-}
-.halfRow70 {
-  width: 70%;
-}
 </style>

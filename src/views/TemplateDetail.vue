@@ -1,29 +1,41 @@
 <template>
-  <div class="wrapper inner">
-    <NavBar />
-    <div class="inputContainer" v-if='templateData'>
-      <div class='row'>
-        <h1> 
-          <input name='title' v-model='templateData.title'/>
-          <a @click='handlerClickSave' class='actionButton'> Save </a>
-          <router-link class='actionButton' :to="`/caption/${templateData.objectId}`"> Caption</router-link>
-        </h1> 
-        <Editor
-          v-model='templateData.content'
-          :handlerClickSave='handlerClickSave'
-        />
-      </div>
-      <div class='row'>
-        <multiselect
-          v-model="selectedFolderList"
-          :options="options"
-          @remove='handlerOnRemove'
-          @select='handlerOnSelect'
-          track-by="title"
-          label='title'
-          :multiple="true"
-        />
-      </div>
+  <div v-if='templateData'>
+      <div class="row m-b-30"> <h4>Template </h4> </div>
+      <div class="row">
+        <div class='col-12'>
+          <div class="input-group row">
+            <input type="text" name="title" class="form-control" v-model='templateData.title'/>
+            <span class="input-group-append">
+              <button
+                type="button"
+                class="btn btn-effect-ripple btn-primary"
+                @click="handlerClickSave"
+              >
+                <i class="far fa-save"></i>
+              </button>
+              <router-link class="btn btn-info waves-effect waves-light" :to="`/caption/${templateData.objectId}`"> 
+                <i class='fas fa-arrow-alt-circle-right' />
+              </router-link>
+            </span>
+          </div>
+        </div>
+    </div>
+    <div class="row m-t-30">
+      <Editor
+        v-model='templateData.content'
+        :handlerClickSave='handlerClickSave'
+      />
+    </div>
+    <div class='row m-t-30'>
+      <multiselect
+        v-model="selectedFolderList"
+        :options="options"
+        @remove='handlerOnRemove'
+        @select='handlerOnSelect'
+        track-by="title"
+        label='title'
+        :multiple="true"
+      />
     </div>
   </div>
 </template>
@@ -32,11 +44,10 @@
 import Parse from "parse";
 import Editor from '@/components/Editor'
 import Multiselect from 'vue-multiselect'
-import NavBar from '@/components/NavBar'
 
 export default {
   name: "templateDetail",
-  components: {Editor, Multiselect, NavBar},
+  components: {Editor, Multiselect},
   data() {
     const {caption = '', igUrl=''} = this.$route.query
 
@@ -198,7 +209,7 @@ export default {
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style scoped>
-.row{
+/* .row{
   margin-top: 40px;
 }
 .inputContainer {
@@ -222,5 +233,5 @@ export default {
   color: black;
   margin: 0 10px;
   text-decoration: none;
-}
+} */
 </style>

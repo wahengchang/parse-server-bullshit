@@ -1,9 +1,11 @@
 <template>
-  <div class="hello">
+  <div class="">
     <div v-if="innerText">
-      <div class="bar">
-        <a class="translate" @click="handlerTranslate">翻譯</a>
-        <a class="translate" @click="handlerUpdate">分析</a>
+      <div class='row m-b-5 add15pxPadding'>
+        <div class="btn-group">
+          <button type='button' class='btn btn-outline-secondary waves-effect' @click="handlerTranslate">翻譯</button>
+          <button type='button' class='btn btn-outline-secondary waves-effect' @click="handlerUpdate">分析</button>
+        </div>
       </div>
       <ReactiveTextInput
         label="Caption"
@@ -58,6 +60,7 @@ export default {
         const {text} = await Parse.Cloud.run("translate", { text: innerText });
         this.innerText = null
         await this.$sleep(0.3);
+        console.log('text: ', text)
         this.innerText = text
         this.$store.system.isLoading = false
       }
@@ -108,16 +111,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.bar {
-  width: 100%;
-  display: flex;
-  margin: auto;
-  flex-direction: row-reverse;
+.add15pxPadding {
+    padding: 0 15px;
 }
-.translate {
-  background: lightgray;
-  padding: 5px 10px;
-  cursor: pointer;
-  border: 1px solid gray;
-}
+// .bar {
+//   width: 100%;
+//   display: flex;
+//   margin: auto;
+//   flex-direction: row-reverse;
+// }
+// .translate {
+//   background: lightgray;
+//   padding: 5px 10px;
+//   cursor: pointer;
+//   border: 1px solid gray;
+// }
 </style>
