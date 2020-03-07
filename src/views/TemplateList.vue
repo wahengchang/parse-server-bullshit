@@ -11,26 +11,34 @@
 import Parse from "parse";
 import TemplateListTable from '@/components/TemplateListTable'
 
+
 export default {
   name: "templateList",
   components: {TemplateListTable},
   data() {
     return {
-      templateList: []
+      templateList: [],
+      folderList: []
     }
   },
   async mounted() {
     this.$store.system.isLoading = true
     try {
       const user = Parse.User.current()
+      const resultTemplateList = await this.fetchTemplateList(user)
+      const resultFolderList = await this.fetchFolderList() || []
 
-      const Template = Parse.Object.extend("Templates");
-      const query = new Parse.Query(Template);
-      query.equalTo("owner", user)
-      query.limit(999)
-      
-      const result = await query.find()
-      this.templateList = result.map(item=> item.toJSON())
+      // normalize 
+      this.templateList = resultTemplateList.map(item=> item.toJSON())
+      this.folderList = resultFolderList.map(item=> item.toJSON())
+
+      // insert folder to template
+      this.templateList = this.templateList.map(item => {
+        if(!item.folderIdList) return item 
+        
+        item.folderList = item.folderIdList.map(id => this.folderList.find(fItem => fItem.objectId===id))
+        return item
+      })
       this.$store.system.isLoading = false
     }
     catch(e){
@@ -39,6 +47,23 @@ export default {
     }
   },
   methods: {
+    fetchTemplateList: async function(user) {
+      const Template = Parse.Object.extend("Templates");
+      const query = new Parse.Query(Template);
+      query.equalTo("owner", user)
+      query.limit(999)
+      
+      const result = await query.find()
+      return result
+    },
+    fetchFolderList: async function() {
+      const Folder = Parse.Object.extend("Folders");
+      const query = new Parse.Query(Folder);
+      query.limit(999)
+      
+      const result = await query.find()
+      return result
+    }
   }
 };
 </script>

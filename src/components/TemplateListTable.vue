@@ -32,7 +32,11 @@
                   {{item.updatedAt}}
                 </td>
                 <td>
-                  <span class="badge badge-boxed badge-success">Business</span>
+                  <router-link  v-for='(fItem, index) in item.folderList' :key='fItem.id' :to='`/folderList/${fItem.objectId}`'>
+                    <span :class="`badge badge-boxed badge-${index%2 ===0? 'success' : 'warning'}`">
+                      {{fItem.title}}
+                    </span>
+                  </router-link>
                 </td>
               </tr>
             </tbody>
@@ -48,7 +52,7 @@ export default {
   name: "templateListTable",
   components: {},
   props: {
-    templateList: Array
+    templateList: Array,
   },
   async mounted() {},
   methods: {}

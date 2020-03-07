@@ -181,15 +181,19 @@ export default {
         const {isAdd = true} = options
         const Template = Parse.Object.extend("Templates")
         const query = new Parse.Query(Template)
-        const res = await query.get(templateId)
-        const relation = res.relation("folders")
+        const templateRes = await query.get(templateId)
+        const templateResJson = templateRes.toJSON()
+        const relation = templateRes.relation("folders")
+        const originFolderIdList = templateResJson.folderIdList || []
         if(isAdd) {
           relation.add(targetFolderObj)
+          templateRes.set('folderIdList', [...originFolderIdList, targetFolderObj.id])
         }
         else {
           relation.remove(targetFolderObj)
+          templateRes.set('folderIdList', [...originFolderIdList.filter(item => item !== targetFolderObj.id)])
         }
-        return res.save()
+        return templateRes.save()
     },
     appendTemplateToFolder: function(templateObj, targetFolderObj, options = {}) {
         const {isAdd = true} = options
