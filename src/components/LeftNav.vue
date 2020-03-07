@@ -9,7 +9,7 @@
     <div class="topbar-left">
       <div class="text-center">
         <!--<a href="index.html" class="logo"><i class="fa fa-paw"></i> Aplomb</a>-->
-        <a href="index.html" class="logo">
+        <a href="/" class="logo">
           <img src="assets/images/logo.png" height="14" alt="logo" />
         </a>
       </div>

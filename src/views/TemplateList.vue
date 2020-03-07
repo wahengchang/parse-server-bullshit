@@ -1,6 +1,5 @@
 <template>
   <div class="wrapper inner">
-    <NavBar />
     <div class="inputContainer">
       <h1> Template </h1>
       <TemplateListTable :templateList='templateList'/>
@@ -10,12 +9,11 @@
 
 <script>
 import Parse from "parse";
-import NavBar from '@/components/NavBar'
 import TemplateListTable from '@/components/TemplateListTable'
 
 export default {
   name: "templateList",
-  components: {NavBar, TemplateListTable},
+  components: {TemplateListTable},
   data() {
     return {
       templateList: []

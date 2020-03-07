@@ -1,6 +1,5 @@
 <template>
   <div class="wrapper">
-    <NavBar />
     <div class="inner">
       <div class="inputContainer">
         <p>
@@ -36,11 +35,10 @@
 
 <script>
 import Parse from "parse";
-import NavBar from '@/components/NavBar'
 
 export default {
   name: "folderList",
-  components: {NavBar},
+  components: {},
   data() {
     return {
       folderList: []

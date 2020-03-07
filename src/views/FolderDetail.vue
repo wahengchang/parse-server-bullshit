@@ -1,6 +1,5 @@
 <template>
   <div id="main" class="wrapper inner">
-    <NavBar />
     <div class="inputContainer" v-if='folderData'>
       <h1> 
         <input name='title' v-model='folderData.title'/>
@@ -13,12 +12,11 @@
 
 <script>
 import Parse from "parse";
-import NavBar from '@/components/NavBar'
 import TemplateListTable from '@/components/TemplateListTable'
 
 export default {
   name: "folderDetail",
-  components: {NavBar, TemplateListTable},
+  components: {TemplateListTable},
   data() {
     const {caption = '', igUrl=''} = this.$route.query
 
