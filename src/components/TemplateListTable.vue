@@ -1,18 +1,46 @@
 <template>
-    <div class='listContainer'>
-    <div 
-        v-for='(item, index) in templateList'
-        :key='index'
-        class='row' 
-    >
-        <div class='cell titleCell'>
-        <router-link class='title' :to="`/templateList/${item.objectId}`">{{item.title || '--'}}</router-link>
-        <span class='date'>{{item.updatedAt}}</span>
-        <router-link class='captionButton' :to="`/caption/${item.objectId}`"> Caption </router-link>
+  <div class="listContainer">
+    <div class="card m-b-30">
+      <div class="card-body">
+        <p class="text-muted font-14">
+          <code> {{templateList.length}} </code> Templates found.
+        </p>
+
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="thead-default">
+              <tr>
+                <th>Caption</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Update</th>
+                <th>Access</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr  v-for='(item, index) in templateList' :key='index'>
+                <th scope="row">
+                  <router-link class='title' :to="`/templateList/${item.objectId}`">{{item.title || '--'}}</router-link>
+                </th>
+                <td>
+                  {{item.content}}
+                </td>
+                <td>
+                  <router-link :to='`/caption/${item.objectId}`' class="btn waves-light"><i class="fas fa-arrow-alt-circle-right"></i></router-link>
+                </td>
+                <td>
+                  {{item.updatedAt}}
+                </td>
+                <td>
+                  <span class="badge badge-boxed badge-success">Business</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div  class='cell content'>{{item.content}}</div>
+      </div>
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -22,53 +50,10 @@ export default {
   props: {
     templateList: Array
   },
-  async mounted() {
-  },
-  methods: {
-  }
+  async mounted() {},
+  methods: {}
 };
 </script>
 
 <style scoped>
-.listContainer {
-  display: flex;
-  flex-direction: column;
-  padding: 0 10px;
-}
-.row {
-  display: flex;
-  margin-top: 20px;
-}
-.cell {
-  border: 1px solid lightgray;
-}
-.titleCell{
-  width: 30%;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-}
-.title{
-  font-weight: 700;
-}
-.date{
-  font-size: 12px;
-  margin-bottom: auto;
-}
-.row .content{
-  width: 70%;
-  text-align: left;
-  font-size: 12px;
-}
-.captionButton {
-  display: inline-block;
-  background: lightgray;
-  padding: 0px 10px;
-  cursor: pointer;
-  height: 30px;
-  line-height: 30px;
-  font-size: 14px;
-  color: black;
-  text-decoration: none;
-}
 </style>
