@@ -1,8 +1,29 @@
 <template>
-  <div class="wrapper inner">
     <div class="inputContainer" v-if="templateData">
-      <h3>{{templateData.title}}</h3>
-      <div class="contentContainer">
+      <h1>{{templateData.title}}</h1>
+
+      <div class="row grid-col">
+        <div class="col-5">
+          <div class="rowCaption" v-for="({key, value}, index) in varList" :key="index">
+            <ReactiveSpeechTextInput :title="key" :value="value" :updateValue="updateValue" />
+          </div>
+        </div>                         
+        <div class="col-7">
+          <div class="card m-b-30 text-white bg-dark">
+              <div class="card-body">
+                  <blockquote class="card-blockquote">
+                    <p>{{previewCaption}}</p>
+                      <footer>
+                        {{templateData.createdAt}} <cite title="Source Title">{{templateData.owner.username}}</cite>
+                      </footer>
+                  </blockquote>
+              </div>
+          </div>
+        </div>                              
+      </div>                           
+    </div>
+
+      <!-- <div class="contentContainer">
         <div class="leftContainer borderBox">
           <div class="rowCaption" v-for="({key, value}, index) in varList" :key="index">
             <ReactiveSpeechTextInput :title="key" :value="value" :updateValue="updateValue" />
@@ -12,8 +33,7 @@
           <p>{{previewCaption}}</p>
         </div>
       </div>
-    </div>
-  </div>
+    </div> -->
 </template>
 
 <script>
@@ -94,24 +114,4 @@ export default {
 </script>
 
 <style scoped>
-.leftContainer {
-  width: 30%;
-  text-align: left;
-}
-.leftContainer input {
-}
-.contentContainer {
-  display: flex;
-  min-height: 300px;
-}
-.borderBox {
-  border: 1px gray solid;
-  padding: 5px 20px;
-}
-.rightContainer {
-  width: 70%;
-}
-.rightContainer p {
-  text-align: left;
-}
 </style>

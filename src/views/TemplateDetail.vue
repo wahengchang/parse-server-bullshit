@@ -1,6 +1,6 @@
 <template>
   <div v-if='templateData'>
-      <div class="row m-b-30"> <h4>Template </h4> </div>
+      <h1> Template </h1>
       <div class="row">
         <div class='col-12'>
           <div class="input-group row">

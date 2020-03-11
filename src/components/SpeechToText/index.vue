@@ -1,6 +1,6 @@
 <template>
   <div class='floating'>
-    <span> {{inputWords}} </span>
+    <!-- <span> {{inputWords}} </span> -->
     <span class='styleTrans'>{{ runtimeTranscription }}</span>
   </div>
 </template>
