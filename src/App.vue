@@ -1,37 +1,47 @@
 <template>
   <div id="app" class="fixed-left">
-    <loading :active="isLoading" 
-    :can-cancel="true" 
-    :is-full-page="true"></loading>
+    <Modal
+      v-if='modalData'
+      :title='modalData.title'
+      :content='modalData.content'
+      :onClickClose='modalData.onClickClose'
+      :onClickSave='modalData.onClickSave'
+    />
+    <loading :active="isLoading" :can-cancel="true" :is-full-page="true"></loading>
 
-		<!-- Header -->
+    <!-- Header -->
     <div id="wrapper">
       <component :is="layout">
-        <router-view/>
+        <router-view />
       </component>
     </div>
   </div>
 </template>
 <script>
-import Loading from 'vue-loading-overlay';
-import LeftNav from '@/components/LeftNav';
-import 'vue-loading-overlay/dist/vue-loading.css';
-import Parse from 'parse'
+import Loading from "vue-loading-overlay";
+import LeftNav from "@/components/LeftNav";
+import Modal from "@/components/Common/Modal";
+
+import "vue-loading-overlay/dist/vue-loading.css";
+import Parse from "parse";
 
 export default {
-  components:{Loading, LeftNav},
+  components: { Loading, LeftNav, Modal },
   computed: {
     isLoading: function() {
-      return this.$store.system.isLoading
+      return this.$store.system.isLoading;
+    },
+    modalData: function() {
+      return this.$store.system.modalData;
     },
     layout() {
-      return (this.$route.meta.layout || 'default') + "-layout";
+      return (this.$route.meta.layout || "default") + "-layout";
     },
-    user: function () {
-      return  (Parse.User.current() && Parse.User.current().toJSON() )|| null
+    user: function() {
+      return (Parse.User.current() && Parse.User.current().toJSON()) || null;
     }
   }
-}
+};
 </script>
 <style lang="scss">
 // #app {
