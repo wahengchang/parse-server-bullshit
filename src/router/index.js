@@ -10,6 +10,8 @@ import IgPreEdit from '../views/IgPreEdit.vue'
 import FolderList from '../views/FolderList.vue'
 import FolderDetail from '../views/FolderDetail.vue'
 import TemplateList from '../views/TemplateList.vue'
+import CompositeList from '../views/CompositeList.vue'
+import CompositeDetail from '../views/CompositeDetail.vue'
 import TemplateDetail from '../views/TemplateDetail.vue'
 import CaptionDetail from '../views/CaptionDetail.vue'
 import Parse from 'parse'
@@ -70,6 +72,18 @@ const routes = [
     name: 'folderDetail',
     meta: {permission: requiredLogin},
     component: FolderDetail
+  },
+  {
+    path: '/compositesList',
+    name: 'compositesList',
+    meta: {permission: requiredLogin},
+    component: CompositeList
+  },
+  {
+    path: '/compositesList/:id',
+    name: 'compositesListsDetail',
+    meta: {permission: requiredLogin},
+    component: CompositeDetail
   },
   {
     path: '/templateList',

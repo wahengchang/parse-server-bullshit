@@ -20,7 +20,7 @@
             <tbody>
               <tr  v-for='(item, index) in templateList' :key='index'>
                 <th scope="row">
-                  <router-link class='title' :to="`/templateList/${item.objectId}`">{{item.title || '--'}}</router-link>
+                  <router-link class='title' :to="`${prefixUrlInner}/${item.objectId}`">{{item.title || '--'}}</router-link>
                 </th>
                 <td>
                   {{item.content}}
@@ -51,8 +51,14 @@
 export default {
   name: "templateListTable",
   components: {},
+  data: function() {
+    return {
+      prefixUrlInner: this.prefixUrl || '/templateList'
+    }
+  },
   props: {
     templateList: Array,
+    prefixUrl: String
   },
   async mounted() {},
   methods: {}
