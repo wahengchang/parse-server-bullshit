@@ -48,6 +48,12 @@
             </router-link>
           </li>
 
+          <li class="has_sub">
+            <router-link to="/compositesList" class="waves-effect waves-light">
+              <i class="mdi mdi-apple-keyboard-command"></i>
+              <span> Composites </span>
+            </router-link>
+          </li>
 
           <li class="menu-title">User:  {{user.username}}</li>
 
