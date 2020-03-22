@@ -22,7 +22,7 @@
             <p> {{content}} </p>
           </div>
           <div class="modal-footer">
-            <button v-if='onClickSave' type="button" class="btn btn-primary" @click='onClickSaveInner'>Save changes</button>
+            <button v-if='onClickSave' type="button" class="btn btn-primary" @click='onClickSaveInner'>Save</button>
             <button v-if='onClickClose' type="button" class="btn btn-danger ml-2" @click='onClickCloseInner' data-dismiss="modal">Close</button>
           </div>
         </div>
